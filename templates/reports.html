@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Reports{% endblock %}
+{% block content %}
+<h1>Reports</h1>
+<p class="subtitle">The 10 database views from Phase II. Each one can be exported to CSV or PDF.</p>
+
+<div class="view-list">
+    {% for name, info in views.items() %}
+    <a class="view-card" href="{{ url_for('report_view', view_name=name) }}">
+        <strong><span class="num">View {{ info[0] }}</span>{{ info[1] }}</strong>
+        <p>{{ info[2] }}</p>
+    </a>
+    {% endfor %}
+</div>
+{% endblock %}

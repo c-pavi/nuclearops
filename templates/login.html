@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in - NuclearOps</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="login-page">
+    <div class="login-box">
+        <div class="brand-mark" aria-hidden="true">☢</div>
+        <h1>Nuclear<span>Ops</span></h1>
+        <p class="subtitle">Maintenance and Outage Tracker</p>
+
+        {% with messages = get_flashed_messages() %}
+            {% for msg in messages %}
+                <div class="message error">{{ msg }}</div>
+            {% endfor %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('login') }}" id="login-form" novalidate>
+            <div class="field">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" value="{{ username or '' }}" required autofocus>
+            </div>
+            <div class="field">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Sign In</button>
+        </form>
+
+        <div class="demo-logins">
+            Demo accounts:
+            <table>
+                <tr><th>Username</th><th>Password</th><th>Role</th></tr>
+                <tr><td>admin</td><td>admin123</td><td>admin</td></tr>
+                <tr><td>schen</td><td>user123</td><td>user</td></tr>
+                <tr><td>guest1</td><td>guest123</td><td>guest</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Check the form before it is sent to the server
+        document.getElementById("login-form").addEventListener("submit", function (event) {
+            const username = document.getElementById("username");
+            const password = document.getElementById("password");
+            username.classList.toggle("invalid", username.value.trim() === "");
+            password.classList.toggle("invalid", password.value === "");
+            if (username.value.trim() === "" || password.value === "") {
+                event.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>

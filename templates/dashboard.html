@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h1>Dashboard</h1>
+<p class="subtitle">Maintenance status across all stations</p>
+
+<div class="grid-4">
+    <div class="stat">
+        <div class="number">{{ counts.active_work_orders }}</div>
+        <div class="label">Active work orders</div>
+    </div>
+    <div class="stat danger">
+        <div class="number">{{ counts.overdue_inspections }}</div>
+        <div class="label">Overdue inspections</div>
+    </div>
+    <div class="stat warn">
+        <div class="number">{{ counts.low_stock_parts }}</div>
+        <div class="label">Parts to reorder</div>
+    </div>
+    <div class="stat">
+        <div class="number">{{ counts.outages_in_progress }}</div>
+        <div class="label">Outages in progress</div>
+    </div>
+</div>
+
+<div class="grid-2">
+    <div class="card">
+        <h2>Unfinished work orders by priority</h2>
+        <div class="chart-box"><canvas id="backlog-chart"></canvas></div>
+    </div>
+    <div class="card">
+        <h2>All work orders by status</h2>
+        <div class="chart-box"><canvas id="status-chart"></canvas></div>
+    </div>
+</div>
+
+<div class="card">
+    <h2>Completed outages: planned vs. actual days</h2>
+    <div class="chart-box"><canvas id="outage-chart"></canvas></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

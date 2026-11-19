@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}NuclearOps{% endblock %} - NuclearOps</title>
+    <meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="navbar">
+        <div class="brand"><span class="brand-mark" aria-hidden="true">☢</span><span class="brand-name">Nuclear<span>Ops</span></span></div>
+        <nav aria-label="Main">
+            <div class="segmented">
+            {% set page = request.endpoint %}
+            <a href="{{ url_for('dashboard') }}" class="{{ 'active' if page == 'dashboard' }}">Dashboard</a>
+            <a href="{{ url_for('work_orders_page') }}" class="{{ 'active' if page == 'work_orders_page' }}">Work Orders</a>
+            <a href="{{ url_for('equipment_page') }}" class="{{ 'active' if page == 'equipment_page' }}">Equipment</a>
+            <a href="{{ url_for('workers_page') }}" class="{{ 'active' if page == 'workers_page' }}">Workers</a>
+            <a href="{{ url_for('weather_page') }}" class="{{ 'active' if page == 'weather_page' }}">Outage Weather</a>
+            <a href="{{ url_for('reports') }}" class="{{ 'active' if page in ('reports', 'report_view') }}">Reports</a>
+            </div>
+        </nav>
+        <div class="user">
+            <span class="avatar" aria-hidden="true">{{ (current_user or '?')[:1] }}</span>
+            <span class="user-name">{{ current_user }}</span>
+            <span class="role-badge">{{ current_role }}</span>
+            <a href="{{ url_for('logout') }}">Log out</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Messages float at the top of the page (flashed and from JavaScript) -->
+        <div id="message-area" role="status" aria-live="polite">
+        {% with messages = get_flashed_messages() %}
+            {% for msg in messages %}
+                <div class="message info">{{ msg }}</div>
+            {% endfor %}
+        {% endwith %}
+        </div>
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <script>
+        // Lets our JavaScript know the logged-in user's role
+        const CURRENT_ROLE = "{{ current_role }}";
+    </script>
+    <script src="{{ url_for('static', filename='js/common.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>
