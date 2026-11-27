@@ -1,3 +1,6 @@
+
+https://github.com/user-attachments/assets/83624c38-1bc5-4331-bb3a-b0875aee92e5
+
 # NuclearOps: Maintenance and Outage Tracker
 
 SOFE 3700U Data Management Systems, Phase III
